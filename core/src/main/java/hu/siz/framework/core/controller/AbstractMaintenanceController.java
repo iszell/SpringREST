@@ -24,20 +24,17 @@ import java.util.List;
 @Slf4j
 public abstract class AbstractMaintenanceController<T, I> implements MaintenanceAPI<T, I> {
     @Override
-    public ResponseEntity<IdentifierWrapper<I>> create(@Valid T data) {
+    public IdentifierWrapper<I> create(@Valid T data) {
         log.debug("Create: {}", data);
-        return ResponseEntity.status(HttpStatus.CREATED.value())
-                .body(
-                        getMaintenanceService()
-                                .create(data));
+        return getMaintenanceService()
+                .create(data);
     }
 
     @Override
-    public ResponseEntity<Page<T>> search(List<Filter>[] filter, long page, long size, Order[] order) {
+    public Page<T> search(List<Filter>[] filter, long page, long size, Order[] order) {
         log.debug("Search: {} {} {} {}", filter, page, page, order);
-        return ResponseEntity.ok(
-                getMaintenanceService()
-                        .search(filter, page, size, order));
+        return getMaintenanceService()
+                .search(filter, page, size, order);
     }
 
     /**

@@ -31,7 +31,7 @@ public interface MaintenanceAPI<T, I> {
     @PutMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Create object")
     @ResponseStatus(HttpStatus.CREATED)
-    default ResponseEntity<IdentifierWrapper<I>> create(@Valid @RequestBody T dto) {
+    default IdentifierWrapper<I> create(@Valid @RequestBody T dto) {
         throw new UnsupportedOperationException("create operation is not supported by this API");
     }
 
@@ -43,7 +43,7 @@ public interface MaintenanceAPI<T, I> {
      */
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Get an object by its identifier")
-    default ResponseEntity<T> get(@PathVariable I id) {
+    default T get(@PathVariable I id) {
         throw new
                 UnsupportedOperationException("get operation is not supported by this API");
     }
@@ -56,7 +56,7 @@ public interface MaintenanceAPI<T, I> {
      */
     @DeleteMapping("{id}")
     @Operation(description = "Delete object")
-    default ResponseEntity<Void> delete(@PathVariable I id) {
+    default void delete(@PathVariable I id) {
         throw new UnsupportedOperationException("delete operation is not supported by this API");
     }
 
@@ -69,7 +69,7 @@ public interface MaintenanceAPI<T, I> {
      */
     @PatchMapping(value = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Patch (partially update) object")
-    default ResponseEntity<Void> patch(@PathVariable I id, @Valid @RequestBody T dto) {
+    default void patch(@PathVariable I id, @Valid @RequestBody T dto) {
         throw new UnsupportedOperationException("patch operation is not supported by this API");
     }
 
@@ -86,32 +86,32 @@ public interface MaintenanceAPI<T, I> {
      */
     @GetMapping(value = "search", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Search objects")
-    default ResponseEntity<Page<T>> search(@RequestParam(value = "q", required = false)
-                                           @Schema(description = "Query criteria specified in the form " +
-                                                   "fieldname1=[\\*]matchstyle.value1,value2;fieldname2=... " +
-                                                   "The fields in a criteria are in logical AND relation." +
-                                                   "The optional asterisk [\\*] means case sensitive search. " +
-                                                   "For match styles that supports multiple values they can be " +
-                                                   "specified as a comma separated list. " +
-                                                   "Default match style is EQUAL. " +
-                                                   "Multiple critera are separatedd by semicolons. " +
-                                                   "You can specify this parameter more than once. The relation " +
-                                                   "between those will be logical OR.",
-                                                   example = "firstName=in.john,jane" +
-                                                           ";lastName=*Doe" +
-                                                           ";email=like.@gmail.com")
-                                           List<Filter>[] filter,
-                                           @RequestParam(value = "p", required = false, defaultValue = "0")
-                                           @Schema(description = "Requested page", defaultValue = "0")
-                                           long page,
-                                           @RequestParam(value = "s", required = false, defaultValue = "20")
-                                           @Schema(description = "Page size", defaultValue = "20")
-                                           long size,
-                                           @RequestParam(value = "o", required = false)
-                                           @Schema(description = "Order fields. Can have more than one in a query. " +
-                                                   "Field name prefixed with a minus sign (-) means descending order",
-                                                   example = "o=-age&o=name")
-                                           Order[] order) {
+    default Page<T> search(@RequestParam(value = "q", required = false)
+                           @Schema(description = "Query criteria specified in the form " +
+                                   "fieldname1=[\\*]matchstyle.value1,value2;fieldname2=... " +
+                                   "The fields in a criteria are in logical AND relation." +
+                                   "The optional asterisk [\\*] means case sensitive search. " +
+                                   "For match styles that supports multiple values they can be " +
+                                   "specified as a comma separated list. " +
+                                   "Default match style is EQUAL. " +
+                                   "Multiple critera are separatedd by semicolons. " +
+                                   "You can specify this parameter more than once. The relation " +
+                                   "between those will be logical OR.",
+                                   example = "firstName=in.john,jane" +
+                                           ";lastName=*Doe" +
+                                           ";email=like.@gmail.com")
+                           List<Filter>[] filter,
+                           @RequestParam(value = "p", required = false, defaultValue = "0")
+                           @Schema(description = "Requested page", defaultValue = "0")
+                           long page,
+                           @RequestParam(value = "s", required = false, defaultValue = "20")
+                           @Schema(description = "Page size", defaultValue = "20")
+                           long size,
+                           @RequestParam(value = "o", required = false)
+                           @Schema(description = "Order fields. Can have more than one in a query. " +
+                                   "Field name prefixed with a minus sign (-) means descending order",
+                                   example = "o=-age&o=name")
+                           Order[] order) {
         throw new UnsupportedOperationException("search operation is not supported by this API");
     }
 
