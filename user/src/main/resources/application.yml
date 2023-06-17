@@ -1,0 +1,21 @@
+logging:
+  level:
+    root: info
+    hu.siz: trace
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: dev
+    url: jdbc:postgresql://localhost:5432/dev
+    username: dev
+  jpa:
+    open-in-view: false
+    show-sql: true
+  liquibase:
+    change-log: changelog-master.xml
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
