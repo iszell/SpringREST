@@ -11,6 +11,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ObjectNotFoundException extends RuntimeException {
-    private final Object id;
     private final Class<?> type;
+    private final Object id;
 }

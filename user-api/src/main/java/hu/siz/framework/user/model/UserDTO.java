@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ import java.util.UUID;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UserDTO extends IdentifierWrapper<UUID> {
+public class UserDTO extends RepresentationModel<UserDTO> {
     @Email
     @Schema(format = "email", requiredMode = Schema.RequiredMode.REQUIRED)
     String email;
@@ -29,5 +30,4 @@ public class UserDTO extends IdentifierWrapper<UUID> {
     private BigDecimal amount;
     @Schema(example = "2023-06-16T21:08:03")
     private LocalDateTime entryDate;
-
 }

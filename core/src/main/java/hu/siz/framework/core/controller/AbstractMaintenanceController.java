@@ -8,8 +8,11 @@ import hu.siz.framework.root.model.Order;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
 import java.util.List;
 
@@ -22,7 +25,7 @@ import java.util.List;
  * @see MaintenanceService
  */
 @Slf4j
-public abstract class AbstractMaintenanceController<T, I> implements MaintenanceAPI<T, I> {
+public abstract class AbstractMaintenanceController<T extends RepresentationModel<T>, I> implements MaintenanceAPI<T, I> {
     @Override
     public IdentifierWrapper<I> create(@Valid T data) {
         log.debug("Create: {}", data);
@@ -31,10 +34,23 @@ public abstract class AbstractMaintenanceController<T, I> implements Maintenance
     }
 
     @Override
-    public Page<T> search(List<Filter>[] filter, long page, long size, Order[] order) {
+    public T get(I id) {
+        log.debug("Get: {}", id);
+        return addLinks(
+                getMaintenanceService()
+                        .get(id)
+                , id);
+    }
+
+    @Override
+    public PagedModel<T> search(List<Filter>[] filter, long page, long size, Order[] order) {
         log.debug("Search: {} {} {} {}", filter, page, page, order);
-        return getMaintenanceService()
-                .search(filter, page, size, order);
+        return getPagedResourcesAssembler()
+                .toModel(
+                        getMaintenanceService()
+                                .search(filter, page, size, order)
+                                .map(pair -> addLinks(pair.getSecond(), pair.getFirst()))
+                );
     }
 
     /**
@@ -43,4 +59,13 @@ public abstract class AbstractMaintenanceController<T, I> implements Maintenance
      * @return the service
      */
     protected abstract MaintenanceService<T, I> getMaintenanceService();
+
+    protected abstract PagedResourcesAssembler getPagedResourcesAssembler();
+
+    protected T addLinks(T type, I id) {
+        return type.add(
+                WebMvcLinkBuilder.linkTo(
+                                WebMvcLinkBuilder.methodOn(this.getClass()).get(id))
+                        .withSelfRel());
+    }
 }

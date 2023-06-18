@@ -4,6 +4,7 @@ import hu.siz.framework.root.model.Filter;
 import hu.siz.framework.root.model.IdentifierWrapper;
 import hu.siz.framework.root.model.Order;
 import org.springframework.data.domain.Page;
+import org.springframework.data.util.Pair;
 
 import java.util.List;
 
@@ -20,5 +21,7 @@ import java.util.List;
 public interface MaintenanceService<T, I> {
     IdentifierWrapper<I> create(T data);
 
-    Page<T> search(List<Filter>[] filter, long page, long size, Order[] order);
+    T get(I id);
+
+    Page<Pair<I, T>> search(List<Filter>[] filter, long page, long size, Order[] order);
 }
