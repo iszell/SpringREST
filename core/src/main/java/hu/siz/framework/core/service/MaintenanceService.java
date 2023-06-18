@@ -23,5 +23,5 @@ public interface MaintenanceService<T, I> {
 
     T get(I id);
 
-    Page<Pair<I, T>> search(List<Filter>[] filter, long page, long size, Order[] order);
+    Page<Pair<I, T>> search(List<Filter>[] filter, int page, int size, Order[] order);
 }

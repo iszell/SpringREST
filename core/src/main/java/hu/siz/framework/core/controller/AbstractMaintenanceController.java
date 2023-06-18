@@ -6,8 +6,9 @@ import hu.siz.framework.root.model.Filter;
 import hu.siz.framework.root.model.IdentifierWrapper;
 import hu.siz.framework.root.model.Order;
 import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -22,8 +23,10 @@ import java.util.List;
  * @see MaintenanceAPI
  * @see MaintenanceService
  */
-@Slf4j
 public abstract class AbstractMaintenanceController<T extends RepresentationModel<T>, I> implements MaintenanceAPI<T, I> {
+
+    protected final Logger log = org.slf4j.LoggerFactory.getLogger(this.getClass());
+
     @Override
     public IdentifierWrapper<I> create(@Valid T data) {
         log.debug("Create: {}", data);
@@ -41,8 +44,8 @@ public abstract class AbstractMaintenanceController<T extends RepresentationMode
     }
 
     @Override
-    public PagedModel<T> search(List<Filter>[] filter, long page, long size, Order[] order) {
-        log.debug("Search: {} {} {} {}", filter, page, page, order);
+    public PagedModel<EntityModel<T>> search(List<Filter>[] filter, int page, int size, Order[] order) {
+        log.debug("Search: {} {} {} {}", filter, page, size, order);
         return getPagedResourcesAssembler()
                 .toModel(
                         getMaintenanceService()
@@ -58,7 +61,7 @@ public abstract class AbstractMaintenanceController<T extends RepresentationMode
      */
     protected abstract MaintenanceService<T, I> getMaintenanceService();
 
-    protected abstract PagedResourcesAssembler getPagedResourcesAssembler();
+    protected abstract PagedResourcesAssembler<T> getPagedResourcesAssembler();
 
     protected T addLinks(T type, I id) {
         return type.add(

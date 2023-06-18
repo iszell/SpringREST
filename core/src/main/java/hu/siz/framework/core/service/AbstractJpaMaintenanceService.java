@@ -38,12 +38,11 @@ public abstract class AbstractJpaMaintenanceService<D, I extends Serializable, E
     }
 
     @Override
-    public Page<Pair<I, D>> search(List<Filter>[] filter, long page, long size, Order[] order) {
+    public Page<Pair<I, D>> search(List<Filter>[] filter, int page, int size, Order[] order) {
         getEntityClass();
-        return new PageImpl<>(
-                getRepository().find(filter, page, size, order)
-                        .map(e -> Pair.of(e.getId(), getMapper().toDTO(e)))
-                        .toList());
+        return getRepository()
+                .find(filter, page, size, order)
+                .map(e -> Pair.of(e.getId(), getMapper().toDTO(e)));
     }
 
     protected abstract BaseJpaRepository<E, I> getRepository();

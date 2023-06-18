@@ -21,5 +21,5 @@ import java.util.UUID;
 @RequestMapping("/api/v1/person")
 public class PersonController extends AbstractMaintenanceController<PersonDTO, UUID> implements PersonApi {
     private final PersonService maintenanceService;
-    private final PagedResourcesAssembler pagedResourcesAssembler;
+    private final PagedResourcesAssembler<PersonDTO> pagedResourcesAssembler;
 }

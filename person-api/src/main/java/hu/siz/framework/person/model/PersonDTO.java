@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Relation(collectionRelation = "persons", itemRelation = "person")
 public class PersonDTO extends RepresentationModel<PersonDTO> {
     @Email
     @Schema(format = "email", requiredMode = Schema.RequiredMode.REQUIRED)

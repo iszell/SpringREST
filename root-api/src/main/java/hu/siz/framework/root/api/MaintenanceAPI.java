@@ -6,6 +6,7 @@ import hu.siz.framework.root.model.Order;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
@@ -84,32 +85,32 @@ public interface MaintenanceAPI<T, I> {
      */
     @GetMapping(value = "search", produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(description = "Search objects")
-    default PagedModel<T> search(@RequestParam(value = "q", required = false)
-                                 @Schema(description = "Query criteria specified in the form " +
-                                         "fieldname1=[\\*]matchstyle.value1,value2;fieldname2=... " +
-                                         "The fields in a criteria are in logical AND relation." +
-                                         "The optional asterisk [\\*] means case sensitive search. " +
-                                         "For match styles that supports multiple values they can be " +
-                                         "specified as a comma separated list. " +
-                                         "Default match style is EQUAL. " +
-                                         "Multiple critera are separatedd by semicolons. " +
-                                         "You can specify this parameter more than once. The relation " +
-                                         "between those will be logical OR.",
-                                         example = "firstName=in.john,jane" +
-                                                 ";lastName=*Doe" +
-                                                 ";email=like.@gmail.com")
-                                 List<Filter>[] filter,
-                                 @RequestParam(value = "p", required = false, defaultValue = "0")
-                                 @Schema(description = "Requested page", defaultValue = "0")
-                                 long page,
-                                 @RequestParam(value = "s", required = false, defaultValue = "20")
-                                 @Schema(description = "Page size", defaultValue = "20")
-                                 long size,
-                                 @RequestParam(value = "o", required = false)
-                                 @Schema(description = "Order fields. Can have more than one in a query. " +
-                                         "Field name prefixed with a minus sign (-) means descending order",
-                                         example = "o=-age&o=name")
-                                 Order[] order) {
+    default PagedModel<EntityModel<T>> search(@RequestParam(value = "filter", required = false)
+                                              @Schema(description = "Query criteria specified in the form " +
+                                                      "fieldname1=[\\*]matchstyle.value1,value2;fieldname2=... " +
+                                                      "The fields in a criteria are in logical AND relation." +
+                                                      "The optional asterisk [\\*] means case sensitive search. " +
+                                                      "For match styles that supports multiple values they can be " +
+                                                      "specified as a comma separated list. " +
+                                                      "Default match style is EQUAL. " +
+                                                      "Multiple critera are separatedd by semicolons. " +
+                                                      "You can specify this parameter more than once. The relation " +
+                                                      "between those will be logical OR.",
+                                                      example = "firstName=in.john,jane" +
+                                                              ";lastName=*Doe" +
+                                                              ";email=like.@gmail.com")
+                                              List<Filter>[] filter,
+                                              @RequestParam(value = "page", required = false, defaultValue = "0")
+                                              @Schema(description = "Requested page", defaultValue = "0")
+                                              int page,
+                                              @RequestParam(value = "size", required = false, defaultValue = "20")
+                                              @Schema(description = "Page size", defaultValue = "20")
+                                              int size,
+                                              @RequestParam(value = "order", required = false)
+                                              @Schema(description = "Order fields. Can have more than one in a query." +
+                                                      " Field name prefixed with a minus sign (-) means " +
+                                                      "descending order", example = "-level,lastName,firstName")
+                                              Order[] order) {
         throw new UnsupportedOperationException("search operation is not supported by this API");
     }
 
