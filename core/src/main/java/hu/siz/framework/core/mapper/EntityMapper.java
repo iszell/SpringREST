@@ -1,7 +1,7 @@
 package hu.siz.framework.core.mapper;
 
 public interface EntityMapper<E, D> {
-    D toDTO(E user);
+    D toDTO(E entity);
 
-    E fromDTO(D userDTO);
+    E fromDTO(D dto);
 }

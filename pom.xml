@@ -8,9 +8,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>root-api</module>
-        <module>user-api</module>
+        <module>person-api</module>
         <module>core</module>
-        <module>user</module>
+        <module>person</module>
     </modules>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
