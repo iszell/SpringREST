@@ -10,7 +10,6 @@ import hu.siz.framework.root.model.Order;
 import jakarta.transaction.Transactional;
 import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.util.Pair;
 
 import java.io.Serializable;

@@ -30,8 +30,11 @@ public abstract class AbstractMaintenanceController<T extends RepresentationMode
     @Override
     public IdentifierWrapper<I> create(@Valid T data) {
         log.debug("Create: {}", data);
-        return getMaintenanceService()
-                .create(data);
+        var identifierWrapper = getMaintenanceService().create(data);
+        return identifierWrapper
+                .add(WebMvcLinkBuilder.linkTo(
+                                WebMvcLinkBuilder.methodOn(this.getClass()).get(identifierWrapper.getId()))
+                        .withSelfRel());
     }
 
     @Override

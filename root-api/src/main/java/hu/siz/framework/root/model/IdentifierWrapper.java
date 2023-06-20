@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 /**
  * A simple, generic wrapper for an identifier
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(name = "id", description = "Identifier wrapper")
-public class IdentifierWrapper<I> {
+public class IdentifierWrapper<I> extends RepresentationModel<IdentifierWrapper<I>> {
     @Schema(description = "Unique identifier")
     private I id;
 }
