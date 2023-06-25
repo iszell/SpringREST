@@ -21,11 +21,11 @@ import java.util.Optional;
 @Component
 public class FilterConverter implements Converter<String, List<Filter>> {
 
-    private static final String FILTER_SEPARATOR = ";";
+    private static final String FILTER_SEPARATOR = ":";
     private static final String VALUE_SEPARATOR = "=";
     private static final String MATCH_STYLE_SEPARATOR = ".";
-    private static final String VALUE_LIST_SEPARATOR = ",";
-    public static final String CASE_SENSITIVE_MARKER = "*";
+    private static final String VALUE_LIST_SEPARATOR = ";";
+    public static final String CASE_SENSITIVE_MARKER = "!";
 
     @Override
     public List<Filter> convert(@NonNull String source) {

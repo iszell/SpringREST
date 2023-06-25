@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * An object representing an order specification for
- * {@link hu.siz.framework.root.api.MaintenanceAPI#search(List[], long, long, Order[])}
+ * {@link hu.siz.framework.root.api.MaintenanceAPI#search(List[], int, int, Order[])}
  *
  * @param field      the field for ordering
  * @param descending switch to turn on descending ordering

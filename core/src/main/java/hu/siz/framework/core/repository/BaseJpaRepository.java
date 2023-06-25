@@ -1,5 +1,6 @@
 package hu.siz.framework.core.repository;
 
+import hu.siz.framework.core.repository.criteria.QuerySpecification;
 import hu.siz.framework.root.model.Filter;
 import hu.siz.framework.root.model.Order;
 import org.springframework.data.domain.Page;
@@ -25,7 +26,7 @@ public interface BaseJpaRepository<T, I> extends JpaRepository<T, I>, JpaSpecifi
             pageRequest = PageRequest.of(page, size);
         }
         if (filter != null) {
-            return findAll(new QuerySpecification<>(filter, page, size, order), pageRequest);
+            return findAll(new QuerySpecification<>(filter), pageRequest);
         } else {
             return findAll(pageRequest);
         }

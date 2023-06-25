@@ -87,18 +87,18 @@ public interface MaintenanceAPI<T, I> {
     @Operation(description = "Search objects")
     default PagedModel<EntityModel<T>> search(@RequestParam(value = "filter", required = false)
                                               @Schema(description = "Query criteria specified in the form " +
-                                                      "fieldname1=[\\*]matchstyle.value1,value2;fieldname2=... " +
+                                                      "fieldname1=[!]matchstyle.value1;value2:fieldname2=... " +
                                                       "The fields in a criteria are in logical AND relation." +
-                                                      "The optional asterisk [\\*] means case sensitive search. " +
+                                                      "The optional exclamation mark [!] means case sensitive search. " +
                                                       "For match styles that supports multiple values they can be " +
-                                                      "specified as a comma separated list. " +
+                                                      "specified as a semicolon separated list. " +
                                                       "Default match style is EQUAL. " +
-                                                      "Multiple critera are separatedd by semicolons. " +
+                                                      "Multiple criteria are separated by semicolons. " +
                                                       "You can specify this parameter more than once. The relation " +
                                                       "between those will be logical OR.",
-                                                      example = "firstName=in.john,jane" +
-                                                              ";lastName=*Doe" +
-                                                              ";email=like.@gmail.com")
+                                                      example = "firstName=in.john;jane" +
+                                                              ":lastName=!Doe" +
+                                                              ":email=like.@gmail.com")
                                               List<Filter>[] filter,
                                               @RequestParam(value = "page", required = false, defaultValue = "0")
                                               @Schema(description = "Requested page", defaultValue = "0")

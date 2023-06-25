@@ -1,8 +1,10 @@
-package hu.siz.framework.core.repository;
+package hu.siz.framework.core.repository.criteria;
 
 import hu.siz.framework.root.model.Filter;
-import hu.siz.framework.root.model.Order;
-import jakarta.persistence.criteria.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,9 +17,6 @@ import java.util.Objects;
 @AllArgsConstructor
 public class QuerySpecification<T> implements Specification<T> {
     private List<Filter>[] filter;
-    private long page;
-    private long size;
-    private Order[] order;
 
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
@@ -42,26 +41,13 @@ public class QuerySpecification<T> implements Specification<T> {
     }
 
     private Predicate toActualPredicate(Root<T> root, CriteriaBuilder criteriaBuilder, Filter f) {
-        Expression<?> field = root.get(f.fieldName());
-        Object[] values;
-        if (f.caseSensitive() || !isString(field)) {
-            values = f.values();
-        } else {
-            values = Arrays.stream(f.values())
-                    .map(String::toUpperCase)
-                    .toList()
-                    .toArray(new String[0]);
-            field = criteriaBuilder.upper(root.get(f.fieldName()));
+        var field = root.get(f.fieldName());
+        if (field != null) {
+            var javaType = field.getJavaType();
+            if (String.class.isAssignableFrom(javaType)) {
+                return StringPredicateBuilder.build(root, criteriaBuilder, f);
+            }
         }
-        return switch (f.matchStyle()) {
-            case EQUAL -> criteriaBuilder.equal(field, (values[0]));
-            case NOTEQUAL -> criteriaBuilder.not(criteriaBuilder.equal(field, (values[0])));
-            case LIKE -> isString(field) ? criteriaBuilder.like((Expression<String>) field, (String) values[0]) : null;
-            case IN -> field.in(values);
-        };
-    }
-
-    private static boolean isString(Expression<?> field) {
-        return String.class.isAssignableFrom(field.getJavaType());
+        return null;
     }
 }
