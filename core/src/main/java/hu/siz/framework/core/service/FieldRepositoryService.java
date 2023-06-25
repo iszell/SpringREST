@@ -1,17 +1,17 @@
 package hu.siz.framework.core.service;
 
+import com.google.common.reflect.ClassPath;
 import hu.siz.framework.root.model.EntityPath;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -19,13 +19,16 @@ import java.util.stream.Collectors;
 public class FieldRepositoryService {
     private static final Map<String, String> EMPTY = new HashMap<>();
     private final Map<String, Map<String, String>> fieldRepository = new HashMap<>();
-    private String packageName = "hu.siz";
 
-    public FieldRepositoryService() {
-        Arrays.stream(ClassLoader.getSystemClassLoader().getDefinedPackages())
-                .map(Package::getName)
-                .filter(name -> name.startsWith(packageName))
-                .forEach(this::processPackageClasses);
+    @SneakyThrows
+    public FieldRepositoryService(@Value("${framework.base-package}") String basePackage) {
+        val classLoader = ClassLoader.getSystemClassLoader();
+        ClassPath.from(classLoader)
+                .getAllClasses()
+                .stream()
+                .filter(i -> i.getPackageName().startsWith(basePackage))
+                .map(this::loadClass)
+                .forEach(this::findAnnotationsInClass);
     }
 
     public String getEntityPathFor(Class<?> clazz, String fieldName) {
@@ -34,31 +37,12 @@ public class FieldRepositoryService {
                 .getOrDefault(fieldName, fieldName);
     }
 
-    private void processPackageClasses(String packageName) {
-        val classLoader = ClassLoader.getSystemClassLoader();
-        var packageURL = classLoader
-                .getResource(packageName.replace('.', '/'));
-
-        if (packageURL != null) {
-            File packageDir = new File(packageURL.getPath());
-            if (packageDir.isDirectory()) {
-                Arrays.stream(Objects.requireNonNull(packageDir.listFiles()))
-                        .map(File::getName)
-                        .filter(n -> n.endsWith(".class"))
-                        .map(n -> loadClass(packageName, n))
-                        .filter(Objects::nonNull)
-                        .forEach(this::findAnnotationsInClass);
-            }
+    private Class<?> loadClass(ClassPath.ClassInfo classInfo) {
+        try {
+            return classInfo.load();
+        } catch (NoClassDefFoundError e) {
+            return null;
         }
-    }
-
-    @SneakyThrows
-    private static Class<?> loadClass(String packageName, String className) {
-        if (className.endsWith(".class")) {
-            className = packageName + '.' + className.substring(0, className.length() - 6);
-            return ClassLoader.getSystemClassLoader().loadClass(className);
-        }
-        return null;
     }
 
     private void findAnnotationsInClass(Class<?> c) {

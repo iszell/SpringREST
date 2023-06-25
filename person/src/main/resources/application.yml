@@ -1,3 +1,5 @@
+framework:
+  base-package: hu.siz
 logging:
   level:
     root: info

@@ -16,6 +16,10 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
             <groupId>hu.siz.framework</groupId>
             <artifactId>root-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
