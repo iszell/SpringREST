@@ -1,5 +1,6 @@
 package hu.siz.framework.root.api;
 
+import hu.siz.framework.root.exception.UnsupportedOperationException;
 import hu.siz.framework.root.model.Filter;
 import hu.siz.framework.root.model.IdentifierWrapper;
 import hu.siz.framework.root.model.Order;
