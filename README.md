@@ -71,6 +71,7 @@ docker run -it -p 5432:5432 -e POSTGRES_DB=dev -e POSTGRES_USER=dev -e POSTGRES_
 
 # ToDo
 
+* Add unit tests
 * Implement other storage models
     * ElasticSearch
     * MongoDB
