@@ -4,14 +4,11 @@ import hu.siz.framework.root.exception.ObjectNotFoundException;
 import hu.siz.framework.root.exception.UnsupportedOperationException;
 import hu.siz.framework.root.model.ErrorDetail;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,7 +29,8 @@ public class ExceptionHandlerControllerAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(produces = {MediaTypes.HAL_JSON_VALUE})
+    @ResponseBody
     public List<ErrorDetail> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         return e.getBindingResult()
                 .getAllErrors()
