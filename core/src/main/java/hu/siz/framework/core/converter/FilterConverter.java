@@ -53,9 +53,7 @@ public class FilterConverter implements Converter<String, List<Filter>> {
         var matchStyleSeparatorIndex = valueExpression.indexOf(MATCH_STYLE_SEPARATOR);
         if (matchStyleSeparatorIndex >= 0) {
             matchStyle = extractMatchStyle(valueExpression.substring(0, matchStyleSeparatorIndex));
-            if (matchStyle.isPresent()) {
-                valueExpression = valueExpression.substring(matchStyleSeparatorIndex + 1);
-            }
+            valueExpression = valueExpression.substring(matchStyleSeparatorIndex + 1);
         }
         return new Filter(fieldName,
                 matchStyle.orElse(Filter.MatchStyle.EQUAL),

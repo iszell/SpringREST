@@ -5,7 +5,7 @@ import hu.siz.framework.person.entity.Person;
 import hu.siz.framework.person.model.PersonDTO;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface PersonMapper extends EntityMapper<Person, PersonDTO> {
 
     PersonDTO toDTO(Person person);
