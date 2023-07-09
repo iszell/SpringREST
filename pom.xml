@@ -15,11 +15,14 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <plugin.version.jacoco>0.8.10</plugin.version.jacoco>
+        <plugin.version.compiler>3.8.1</plugin.version.compiler>
+        <plugin.version.spotless>2.37.0</plugin.version.spotless>
+        <plugin.version.surefire>3.1.2</plugin.version.surefire>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.jacoco>0.8.10</version.jacoco>
+        <version.guava>32.0.1-jre</version.guava>
         <version.mapstruct>1.5.5.Final</version.mapstruct>
         <version.projectlombok>1.18.28</version.projectlombok>
-        <version.spotless>2.37.0</version.spotless>
         <version.springdoc>2.1.0</version.springdoc>
         <version.springframework.boot>3.1.1</version.springframework.boot>
         <version.springframework.cloud>2022.0.3</version.springframework.cloud>
@@ -31,7 +34,7 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>32.0.1-jre</version>
+                <version>${version.guava}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-annotations -->
             <dependency>
@@ -81,7 +84,7 @@
                 <plugin>
                     <groupId>com.diffplug.spotless</groupId>
                     <artifactId>spotless-maven-plugin</artifactId>
-                    <version>${version.spotless}</version>
+                    <version>${plugin.version.spotless}</version>
                     <configuration>
                         <java>
                             <includes>
@@ -135,7 +138,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.1</version>
+                    <version>${plugin.version.compiler}</version>
                     <configuration>
                         <annotationProcessorPaths>
                             <path>
@@ -155,23 +158,21 @@
                             </path>
                         </annotationProcessorPaths>
                         <compilerArgs>
-                            <arg>
-                                -Amapstruct.suppressGeneratorTimestamp=true
-                            </arg>
-                            <arg>
-                                -Amapstruct.suppressGeneratorVersionInfoComment=true
-                            </arg>
-
-                            <arg>
-                                -Amapstruct.defaultComponentModel=spring
-                            </arg>
+                            <arg>-Amapstruct.defaultComponentModel=spring</arg>
+                            <arg>-Amapstruct.suppressGeneratorTimestamp=true</arg>
+                            <arg>-Amapstruct.suppressGeneratorVersionInfoComment=true</arg>
                         </compilerArgs>
                     </configuration>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${plugin.version.surefire}</version>
+                </plugin>
+                <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${version.jacoco}</version>
+                    <version>${plugin.version.jacoco}</version>
                     <executions>
                         <execution>
                             <goals>

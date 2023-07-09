@@ -11,7 +11,6 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -124,7 +123,7 @@ public interface MaintenanceAPI<T, I> {
      */
     @PostMapping("{id}")
     @Operation
-    default ResponseEntity<Void> update(@PathVariable I id, @Valid @RequestBody T dto) {
+    default void update(@PathVariable I id, @Valid @RequestBody T dto) {
         throw new UnsupportedOperationException("update operation is not supported by this API");
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -44,6 +45,12 @@ public abstract class AbstractMaintenanceController<T extends RepresentationMode
                 getMaintenanceService()
                         .get(id)
                 , id);
+    }
+
+    @Override
+    public void update(I id, T dto) {
+        log.debug("Update: {} with {}", id, dto);
+        getMaintenanceService().update(id, dto);
     }
 
     @Override

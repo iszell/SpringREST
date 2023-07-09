@@ -23,5 +23,7 @@ public interface MaintenanceService<T, I> {
 
     T get(I id);
 
+    void update(I id, T data);
+
     Page<Pair<I, T>> search(List<Filter>[] filter, int page, int size, Order[] order);
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="1" author="iszell">
+        <comment>Add record administration fields to person</comment>
+        <addColumn tableName="person">
+            <column name="create_time" type="timestamptz"/>
+            <column name="update_time" type="timestamptz"/>
+            <column name="status" type="varchar"/>
+            <column name="version" type="integer"/>
+        </addColumn>
+        <update tableName="person">
+            <column name="create_time" valueComputed="now()"/>
+            <column name="status" value="a"/>
+            <column name="version" value="0"/>
+        </update>
+        <addNotNullConstraint tableName="person" columnName="create_time"/>
+        <addNotNullConstraint tableName="person" columnName="status"/>
+        <addNotNullConstraint tableName="person" columnName="version"/>
+    </changeSet>
+</databaseChangeLog>

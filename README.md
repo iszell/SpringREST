@@ -1,5 +1,16 @@
 # Skeleton for Spring Boot based REST services (proof of concept)
 
+Spring Boot based microservice PoC with a sample Person API and its implementation
+
+# Features
+
+* REST APIs for data maintenance
+* HATEOAS support
+* Complex freeform query support using HTTP GET
+* Validation
+* Optimistic locking
+* default implementation for maintenance functions so no code required for those
+
 # Parts
 
 ## bom
@@ -76,6 +87,6 @@ docker run -it -p 5432:5432 -e POSTGRES_DB=dev -e POSTGRES_USER=dev -e POSTGRES_
     * ElasticSearch
     * MongoDB
 * Implement non-string search criteria
-* Add optimistic locking
 * Add OAuth2
+* Add Kafka queueing
 * Move to the cloud: Spring Cloud Kubernetes

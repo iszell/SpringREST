@@ -1,6 +1,7 @@
 package hu.siz.framework.person.model;
 
 import hu.siz.framework.root.model.EntityPath;
+import hu.siz.framework.root.model.RecordStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -37,4 +38,7 @@ public class PersonDTO extends RepresentationModel<PersonDTO> {
     private BigDecimal salaryAmount;
     @Schema(example = "2023-06-16T21:08:03")
     private LocalDateTime entryDate;
+    private RecordStatus status;
+    @Schema(description = "Object version for optimistic locking")
+    private Integer version;
 }

@@ -1,6 +1,6 @@
 package hu.siz.framework.person.entity;
 
-import hu.siz.framework.core.entity.BaseEntity;
+import hu.siz.framework.core.entity.AuditableEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.util.UUID;
 @Entity
 @Table
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class Person extends BaseEntity<UUID> {
+public class Person extends AuditableEntity<UUID> {
     private String email;
     private String firstName;
     private String lastName;

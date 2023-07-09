@@ -43,6 +43,13 @@ public abstract class AbstractJpaMaintenanceService<D, I extends Serializable, E
     }
 
     @Override
+    public void update(I id, D data) {
+        E entity = getMapper().fromDTO(data);
+        entity.setId(id);
+        getRepository().saveAndFlush(entity);
+    }
+
+    @Override
     public Page<Pair<I, D>> search(List<Filter>[] filter, int page, int size, Order[] order) {
         List<Filter>[] mappedFilters = filter == null ? null :
                 Arrays.stream(filter)

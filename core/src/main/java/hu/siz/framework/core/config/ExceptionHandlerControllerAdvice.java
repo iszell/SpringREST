@@ -4,6 +4,7 @@ import hu.siz.framework.root.exception.ObjectNotFoundException;
 import hu.siz.framework.root.exception.UnsupportedOperationException;
 import hu.siz.framework.root.model.ErrorDetail;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.StaleObjectStateException;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -64,5 +65,11 @@ public class ExceptionHandlerControllerAdvice {
         log.info("Object not found for type {} and id {}",
                 e.getType() != null ? e.getType().getSimpleName() : null,
                 e.getId());
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(StaleObjectStateException.class)
+    public void handleStaleObjectStateException(StaleObjectStateException e) {
+        log.info("Record version mismatch for {} with id {}", e.getEntityName(), e.getIdentifier());
     }
 }
