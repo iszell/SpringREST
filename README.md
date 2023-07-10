@@ -5,6 +5,7 @@ Spring Boot based microservice PoC with a sample Person API and its implementati
 # Features
 
 * REST APIs for data maintenance
+* Built-in Swagger UI
 * HATEOAS support
 * Complex freeform query support using HTTP GET
 * Validation
@@ -88,5 +89,6 @@ docker run -it -p 5432:5432 -e POSTGRES_DB=dev -e POSTGRES_USER=dev -e POSTGRES_
     * MongoDB
 * Implement non-string search criteria
 * Add OAuth2
+* Record auditing
 * Add Kafka queueing
 * Move to the cloud: Spring Cloud Kubernetes

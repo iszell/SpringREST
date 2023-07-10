@@ -14,12 +14,13 @@ import java.time.ZonedDateTime;
 
 @Data
 @MappedSuperclass
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public abstract class AuditableEntity<I extends Serializable> extends BaseEntity<I> {
     @CreatedDate
     @Column(updatable = false)
     private ZonedDateTime createTime;
     @LastModifiedDate
+    @Column(insertable = false)
     private ZonedDateTime updateTime;
     private RecordStatus status;
     @Version

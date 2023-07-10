@@ -18,8 +18,8 @@ import java.util.List;
 /**
  * Generic maintenance API definition with default implementations returning 501: Not implemented
  *
- * @param <I> the identifier type of the maintained object (DTO)
  * @param <T> the actual DTO type of the maintained object
+ * @param <I> the identifier type of the maintained object (DTO)
  * @author siz
  */
 public interface MaintenanceAPI<T, I> {
@@ -119,7 +119,6 @@ public interface MaintenanceAPI<T, I> {
      *
      * @param id  the identifier of the object
      * @param dto the object
-     * @return nothing
      */
     @PostMapping("{id}")
     @Operation
