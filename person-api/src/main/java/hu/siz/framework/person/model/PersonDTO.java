@@ -38,7 +38,7 @@ public class PersonDTO extends RepresentationModel<PersonDTO> {
     private BigDecimal salaryAmount;
     @Schema(example = "2023-06-16T21:08:03")
     private LocalDateTime entryDate;
-    private RecordStatus status;
+    private RecordStatus status = RecordStatus.ACTIVE;
     @Schema(description = "Object version for optimistic locking")
     private Integer version;
 }

@@ -67,6 +67,11 @@ public class ExceptionHandlerControllerAdvice {
                 e.getId());
     }
 
+    /**
+     * Handle optimistic locking exceptions
+     *
+     * @param e the exception containing the conflicting object reference
+     */
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(StaleObjectStateException.class)
     public void handleStaleObjectStateException(StaleObjectStateException e) {

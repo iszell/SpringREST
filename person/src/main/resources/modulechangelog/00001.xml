@@ -7,7 +7,7 @@
     <changeSet id="1" author="iszell">
         <createTable tableName="person">
             <column name="id" type="uuid" defaultValueComputed="${uuid_generator}">
-                <constraints primaryKey="true" primaryKeyName="pk_user"/>
+                <constraints primaryKey="true" primaryKeyName="pk_person"/>
             </column>
             <column name="email" type="varchar"/>
             <column name="first_name" type="varchar"/>

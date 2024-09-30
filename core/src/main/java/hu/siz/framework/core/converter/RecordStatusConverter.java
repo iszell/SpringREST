@@ -18,6 +18,6 @@ public class RecordStatusConverter implements AttributeConverter<RecordStatus, S
         return Arrays.stream(RecordStatus.values())
                 .filter(s -> s.getDataBaseRepresentation().equals(dbData))
                 .findAny()
-                .orElseGet(null);
+                .orElse(null);
     }
 }

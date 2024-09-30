@@ -3,6 +3,7 @@ package hu.siz.framework.root.model;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -15,6 +16,7 @@ import org.springframework.hateoas.RepresentationModel;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Schema(name = "id", description = "Identifier wrapper")
 public class IdentifierWrapper<I> extends RepresentationModel<IdentifierWrapper<I>> {
     @Schema(description = "Unique identifier")

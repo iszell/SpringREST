@@ -84,11 +84,11 @@ docker run -it -p 5432:5432 -e POSTGRES_DB=dev -e POSTGRES_USER=dev -e POSTGRES_
 # ToDo
 
 * Add unit tests
+* Add OAuth2
 * Implement other storage models
     * ElasticSearch
     * MongoDB
 * Implement non-string search criteria
-* Add OAuth2
 * Record auditing
 * Add Kafka queueing
 * Move to the cloud: Spring Cloud Kubernetes

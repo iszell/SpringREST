@@ -13,20 +13,21 @@
         <module>person</module>
     </modules>
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <plugin.version.jacoco>0.8.10</plugin.version.jacoco>
-        <plugin.version.compiler>3.8.1</plugin.version.compiler>
-        <plugin.version.spotless>2.37.0</plugin.version.spotless>
-        <plugin.version.surefire>3.1.2</plugin.version.surefire>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <plugin.version.jacoco>0.8.12</plugin.version.jacoco>
+        <plugin.version.compiler>3.13.0</plugin.version.compiler>
+        <plugin.version.spotless>2.43.0</plugin.version.spotless>
+        <plugin.version.surefire>3.5.0</plugin.version.surefire>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.guava>32.0.1-jre</version.guava>
-        <version.mapstruct>1.5.5.Final</version.mapstruct>
-        <version.projectlombok>1.18.28</version.projectlombok>
-        <version.springdoc>2.1.0</version.springdoc>
-        <version.springframework.boot>3.1.1</version.springframework.boot>
-        <version.springframework.cloud>2022.0.3</version.springframework.cloud>
-        <version.swagger>2.2.9</version.swagger>
+        <version.guava>33.3.1-jre</version.guava>
+        <version.lombok-mapstruct>0.2.0</version.lombok-mapstruct>
+        <version.mapstruct>1.6.2</version.mapstruct>
+        <version.projectlombok>1.18.34</version.projectlombok>
+        <version.springdoc>2.6.0</version.springdoc>
+        <version.springframework.boot>3.3.4</version.springframework.boot>
+        <version.springframework.cloud>2023.0.3</version.springframework.cloud>
+        <version.swagger>2.2.22</version.swagger>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -54,7 +55,7 @@
                 <artifactId>lombok</artifactId>
                 <version>${version.projectlombok}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+            <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -154,7 +155,7 @@
                             <path>
                                 <groupId>org.projectlombok</groupId>
                                 <artifactId>lombok-mapstruct-binding</artifactId>
-                                <version>0.2.0</version>
+                                <version>${version.lombok-mapstruct}</version>
                             </path>
                         </annotationProcessorPaths>
                         <compilerArgs>

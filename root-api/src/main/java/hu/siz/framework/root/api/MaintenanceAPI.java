@@ -29,7 +29,7 @@ public interface MaintenanceAPI<T, I> {
      * @param dto the source to create the object from
      * @return an {@link IdentifierWrapper} containing the id of the created object
      */
-    @PutMapping(value = "", consumes = MediaTypes.HAL_JSON_VALUE, produces = MediaTypes.HAL_JSON_VALUE)
+    @PostMapping(value = "", consumes = MediaTypes.HAL_JSON_VALUE, produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(description = "Create object")
     @ResponseStatus(HttpStatus.CREATED)
     default IdentifierWrapper<I> create(@Valid @RequestBody T dto) {
@@ -44,7 +44,7 @@ public interface MaintenanceAPI<T, I> {
      */
     @GetMapping(value = "{id}", produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(description = "Get an object by its identifier")
-    default T get(@PathVariable I id) {
+    default T get(@PathVariable("id") I id) {
         throw new
                 UnsupportedOperationException("get operation is not supported by this API");
     }
@@ -56,7 +56,7 @@ public interface MaintenanceAPI<T, I> {
      */
     @DeleteMapping("{id}")
     @Operation(description = "Delete object")
-    default void delete(@PathVariable I id) {
+    default void delete(@PathVariable("id") I id) {
         throw new UnsupportedOperationException("delete operation is not supported by this API");
     }
 
@@ -68,7 +68,7 @@ public interface MaintenanceAPI<T, I> {
      */
     @PatchMapping(value = "{id}", consumes = MediaTypes.HAL_JSON_VALUE)
     @Operation(description = "Patch (partially update) object")
-    default void patch(@PathVariable I id, @Valid @RequestBody T dto) {
+    default void patch(@PathVariable("id") I id, @Valid @RequestBody T dto) {
         throw new UnsupportedOperationException("patch operation is not supported by this API");
     }
 
@@ -120,7 +120,7 @@ public interface MaintenanceAPI<T, I> {
      * @param id  the identifier of the object
      * @param dto the object
      */
-    @PostMapping("{id}")
+    @PutMapping("{id}")
     @Operation
     default void update(@PathVariable I id, @Valid @RequestBody T dto) {
         throw new UnsupportedOperationException("update operation is not supported by this API");
