@@ -1,14 +1,22 @@
 package hu.siz.framework.root.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
-@Getter
+/**
+ * Enum to represent the status of a record
+ */
 @Schema(description = "Record status marker enumeration", example = "ACTIVE")
 public enum RecordStatus {
-    PENDING("p"), ACTIVE("a"), DELETED("d");
-
-    private final String dataBaseRepresentation;
+    /**
+     * Record is inserted but not activated yet
+     */
+    PENDING,
+    /**
+     * Record is active; usable
+     */
+    ACTIVE,
+    /**
+     * Record is deleted; inactive/unusable for new entries
+     */
+    DELETED;
 }

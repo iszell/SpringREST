@@ -18,12 +18,12 @@
         </dependency>
         <dependency>
             <groupId>hu.siz.framework</groupId>
-            <artifactId>person-api</artifactId>
+            <artifactId>core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>hu.siz.framework</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>person-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

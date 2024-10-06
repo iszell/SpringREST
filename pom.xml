@@ -8,15 +8,15 @@
     <packaging>pom</packaging>
     <modules>
         <module>root-api</module>
-        <module>person-api</module>
         <module>core</module>
+        <module>person-api</module>
         <module>person</module>
     </modules>
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <plugin.version.jacoco>0.8.12</plugin.version.jacoco>
         <plugin.version.compiler>3.13.0</plugin.version.compiler>
+        <plugin.version.jacoco>0.8.12</plugin.version.jacoco>
         <plugin.version.spotless>2.43.0</plugin.version.spotless>
         <plugin.version.surefire>3.5.0</plugin.version.surefire>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -87,6 +87,9 @@
                     <artifactId>spotless-maven-plugin</artifactId>
                     <version>${plugin.version.spotless}</version>
                     <configuration>
+                        <upToDateChecking>
+                            <enabled>false</enabled>
+                        </upToDateChecking>
                         <java>
                             <includes>
                                 <include>src/main/java/**/*.java</include>
@@ -112,18 +115,15 @@
                             <!-- licenseHeader -->
                         </java>
                         <pom>
-                            <includes>
-                                <include>pom.xml</include>
-                            </includes>
                             <sortPom>
                                 <expandEmptyElements>false</expandEmptyElements>
                                 <indentSchemaLocation>true</indentSchemaLocation>
                                 <keepBlankLines>false</keepBlankLines>
                                 <lineSeparator>${line.separator}</lineSeparator>
                                 <nrOfIndentSpace>4</nrOfIndentSpace>
-                                <sortDependencies/>
-                                <sortPlugins/>
-                                <sortProperties/>
+                                <sortDependencies>groupId,artifactId</sortDependencies>
+                                <sortPlugins>groupId,artifactId</sortPlugins>
+                                <sortProperties>true</sortProperties>
                             </sortPom>
                         </pom>
                     </configuration>

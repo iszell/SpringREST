@@ -3,15 +3,25 @@ package hu.siz.framework.core.config;
 import hu.siz.framework.root.exception.ObjectNotFoundException;
 import hu.siz.framework.root.exception.UnsupportedOperationException;
 import hu.siz.framework.root.model.ErrorDetail;
+import hu.siz.framework.root.model.ServiceResponse;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.StaleObjectStateException;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 /**
  * A controller advice to turn exceptions into default HTTP responses
@@ -19,8 +29,8 @@ import java.util.List;
  * @author siz
  */
 @Slf4j
-@ControllerAdvice
-public class ExceptionHandlerControllerAdvice {
+@RestControllerAdvice
+public class ExceptionHandlerControllerAdvice extends ResponseEntityExceptionHandler {
 
     /**
      * Convert validation errors to HTTP response
@@ -28,19 +38,25 @@ public class ExceptionHandlerControllerAdvice {
      * @param e the validation exception
      * @return {@link FieldError} list in the body of an HTTP 400 response
      */
+    @Override
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
     @RequestMapping(produces = {MediaTypes.HAL_JSON_VALUE})
-    @ResponseBody
-    public List<ErrorDetail> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        return e.getBindingResult()
-                .getAllErrors()
-                .stream()
-                .map(error -> new ErrorDetail(ErrorDetail.Severity.ERROR,
-                        ((FieldError) error).getField(),
-                        error.getCode(),
-                        error.getDefaultMessage()))
-                .toList();
+    @ApiResponse(responseCode = "400", description = "Bad content",
+            content = @Content(schema = @Schema(implementation = ServiceResponse.class)))
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e,
+                                                                  HttpHeaders headers, HttpStatusCode status,
+                                                                  WebRequest request) {
+        return new ResponseEntity<>(
+                ServiceResponse.builder()
+                        .errors(e.getBindingResult()
+                                .getAllErrors()
+                                .stream()
+                                .map(error -> new ErrorDetail(ErrorDetail.Severity.ERROR,
+                                        ((FieldError) error).getField(),
+                                        error.getCode(),
+                                        error.getDefaultMessage()))
+                                .toList())
+                        .build(), HttpStatus.BAD_REQUEST);
     }
 
     /**
