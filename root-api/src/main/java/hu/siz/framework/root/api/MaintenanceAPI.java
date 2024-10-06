@@ -122,7 +122,7 @@ public interface MaintenanceAPI<T, I> {
      */
     @PutMapping("{id}")
     @Operation
-    default void update(@PathVariable I id, @Valid @RequestBody T dto) {
+    default void update(@PathVariable("id") I id, @Valid @RequestBody T dto) {
         throw new UnsupportedOperationException("update operation is not supported by this API");
     }
 }
