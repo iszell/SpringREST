@@ -6,5 +6,5 @@
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <property name="uuid_generator" value="gen_random_uuid()" dbms="postgresql"/>
     <property name="uuid_generator" value="random_uuid()" dbms="h2"/>
-    <includeAll path="classpath:modulechangelog" relativeToChangelogFile="false"/>
+    <includeAll path="classpath:modulechangelog*" relativeToChangelogFile="false" errorIfMissingOrEmpty="false"/>
 </databaseChangeLog>
